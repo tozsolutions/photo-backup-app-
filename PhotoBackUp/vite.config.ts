@@ -8,12 +8,13 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
+      injectRegister: null,
       registerType: 'autoUpdate',
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg}'],
         maximumFileSizeToCacheInBytes: 3000000,
       },
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
+      includeAssets: ['images/Icon.jpg', 'images/photo1756646513.jpg'],
       manifest: {
         name: 'Fotoğraf Yedekleme Sistemi',
         short_name: 'PhotoBackup',
@@ -27,20 +28,14 @@ export default defineConfig({
           {
             src: '/images/photo1756646513.jpg',
             sizes: '192x192',
-            type: 'image/png',
+            type: 'image/jpeg',
             purpose: 'any'
           },
           {
-            src: '/pwa-512x512.png',
+            src: '/images/Icon.jpg',
             sizes: '512x512',
-            type: 'image/png',
+            type: 'image/jpeg',
             purpose: 'any'
-          },
-          {
-            src: '/pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'maskable'
           }
         ],
         categories: ['utilities', 'productivity'],
