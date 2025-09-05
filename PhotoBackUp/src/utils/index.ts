@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import { validateFileName, sanitizeInput } from './security';
 
 export const formatFileSize = (bytes: number): string => {
   if (bytes === 0) return '0 Bytes';
@@ -43,19 +44,36 @@ export const getCategoryDisplayName = (category: string): string => {
 };
 
 export const generateDeviceId = (): string => {
-  return `device-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  return `device-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
 };
 
 export const validateFile = (file: File): { isValid: boolean; error?: string } => {
   const maxSize = 50 * 1024 * 1024; // 50MB
   const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'video/mp4', 'video/mov'];
   
+  // File size validation
   if (file.size > maxSize) {
     return { isValid: false, error: 'Dosya boyutu 50MB\'yi aşamaz' };
   }
   
+  if (file.size === 0) {
+    return { isValid: false, error: 'Dosya boş olamaz' };
+  }
+  
+  // File type validation
   if (!allowedTypes.includes(file.type)) {
     return { isValid: false, error: 'Desteklenmeyen dosya türü' };
+  }
+  
+  // File name validation
+  if (!validateFileName(file.name)) {
+    return { isValid: false, error: 'Geçersiz dosya adı' };
+  }
+  
+  // Additional security checks
+  const sanitizedName = sanitizeInput(file.name);
+  if (sanitizedName !== file.name) {
+    return { isValid: false, error: 'Dosya adında geçersiz karakterler' };
   }
   
   return { isValid: true };
@@ -70,5 +88,8 @@ export const createBackupPath = (deviceType: string, date: Date, category: strin
     deleted: 'Silinmis_Ogeler'
   };
   
-  return `C:\\Users\\TOZ\\AppData\\Local\\PhotoBackup\\${formattedDate}_${deviceType}\\${categoryMap[category] || 'Diger'}\\${fileName}`;
+  const backupPath = import.meta.env.VITE_BACKUP_PATH || '/Users/Default/PhotoBackup';
+  const separator = backupPath.includes('\\') ? '\\' : '/';
+  
+  return `${backupPath}${separator}${formattedDate}_${deviceType}${separator}${categoryMap[category] || 'Diger'}${separator}${fileName}`;
 };
