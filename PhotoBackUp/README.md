@@ -114,8 +114,8 @@ npm run typecheck
 # Docker image oluşturun
 docker build -t photo-backup-app .
 
-# Container çalıştırın
-docker run -p 3000:3000 photo-backup-app
+# Container çalıştırın (Nginx 80 portundan servis eder)
+docker run -p 3000:80 photo-backup-app
 ```
 
 ## 📱 Kullanım
