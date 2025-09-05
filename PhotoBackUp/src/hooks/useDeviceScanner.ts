@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { Device } from '@/types';
+import { validateIPAddress, RateLimiter } from '@/utils/security';
 
 const mockDevices: Device[] = [
   {
@@ -35,12 +36,19 @@ export const useDeviceScanner = () => {
   const [devices, setDevices] = useState<Device[]>([]);
   const [isScanning, setIsScanning] = useState(false);
   const [scanInterval, setScanInterval] = useState<number | null>(null);
+  const [rateLimiter] = useState(() => new RateLimiter(10, 60000)); // 10 scans per minute
 
   const scanForDevices = useCallback(async () => {
     if (!isScanning) return;
 
+    // Rate limiting check
+    if (!rateLimiter.isAllowed('device-scan')) {
+      console.warn('Device scan rate limit exceeded');
+      return;
+    }
+
     try {
-      // Simulate device discovery with some randomness
+      // Validate and filter devices with security checks
       const discoveredDevices = mockDevices
         .filter(() => Math.random() > 0.3) // Randomly filter devices
         .map(device => ({
@@ -48,14 +56,20 @@ export const useDeviceScanner = () => {
           lastSeen: new Date(Date.now() - Math.random() * 300000), // Random last seen time
           isConnected: Math.random() > 0.2, // 80% chance of being connected
           batteryLevel: Math.max(20, Math.min(100, (device.batteryLevel || 50) + (Math.random() - 0.5) * 10)),
-        }));
+        }))
+        .filter(device => {
+          // Security validation
+          return validateIPAddress(device.ipAddress) && 
+                 device.name.length <= 50 && 
+                 device.name.length > 0;
+        });
 
       setDevices(discoveredDevices);
-    } catch (_error) {
-      // eslint-disable-next-line no-console
-      console.error('Error scanning for devices:', _error);
+    } catch (error) {
+      console.error('Error scanning for devices:', error);
+      // In production, this would be sent to an error tracking service
     }
-  }, [isScanning]);
+  }, [isScanning, rateLimiter]);
 
   const startScan = useCallback(() => {
     if (isScanning) return;

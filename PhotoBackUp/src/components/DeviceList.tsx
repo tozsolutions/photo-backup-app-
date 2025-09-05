@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Device } from '@/types';
 import { Wifi, Clock, Battery, Smartphone } from 'lucide-react';
 import { getRelativeTime } from '@/utils';
@@ -9,7 +9,7 @@ interface DeviceListProps {
   isScanning: boolean;
 }
 
-export const DeviceList: React.FC<DeviceListProps> = ({
+export const DeviceList: React.FC<DeviceListProps> = memo(({
   devices,
   onDeviceClick,
   isScanning,
@@ -115,4 +115,4 @@ export const DeviceList: React.FC<DeviceListProps> = ({
       )}
     </div>
   );
-};
+});
