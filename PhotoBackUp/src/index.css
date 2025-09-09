@@ -52,7 +52,10 @@ body {
 
 /* Smooth transitions */
 * {
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+  transition:
+    color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out;
 }
 
 /* Focus styles */
@@ -66,7 +69,8 @@ textarea:focus {
 
 /* Loading animation */
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {

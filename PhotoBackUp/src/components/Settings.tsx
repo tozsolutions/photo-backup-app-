@@ -48,9 +48,7 @@ export const Settings: React.FC<SettingsProps> = ({
           </div>
 
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h4 className="font-medium text-blue-800 mb-2">
-              Gelişmiş Ayarlar
-            </h4>
+            <h4 className="font-medium text-blue-800 mb-2">Gelişmiş Ayarlar</h4>
             <div className="space-y-2 text-sm text-blue-700">
               <p>• Maksimum dosya boyutu: 50MB</p>
               <p>• Desteklenen formatlar: JPG, PNG, WebP, MP4, MOV</p>

@@ -22,7 +22,8 @@ export const DeviceList: React.FC<DeviceListProps> = ({
           Cihaz Bulunamadı
         </h3>
         <p className="text-gray-600">
-          Aynı WiFi ağında cihaz bulunamadı. Telefonunuzun WiFi bağlantısını kontrol edin.
+          Aynı WiFi ağında cihaz bulunamadı. Telefonunuzun WiFi bağlantısını
+          kontrol edin.
         </p>
       </div>
     );
@@ -31,7 +32,9 @@ export const DeviceList: React.FC<DeviceListProps> = ({
   return (
     <div className="bg-white rounded-xl shadow-lg p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold text-gray-800">Tespit Edilen Cihazlar</h2>
+        <h2 className="text-xl font-bold text-gray-800">
+          Tespit Edilen Cihazlar
+        </h2>
         <div className="flex items-center space-x-2">
           <div
             className={`w-2 h-2 rounded-full ${
@@ -77,14 +80,18 @@ export const DeviceList: React.FC<DeviceListProps> = ({
             <div className="space-y-2">
               <div className="flex items-center justify-between text-sm">
                 <span className="text-gray-600">IP Adresi:</span>
-                <span className="font-mono text-gray-800">{device.ipAddress}</span>
+                <span className="font-mono text-gray-800">
+                  {device.ipAddress}
+                </span>
               </div>
               <div className="flex items-center justify-between text-sm">
                 <span className="text-gray-600 flex items-center space-x-1">
                   <Clock className="w-3 h-3" />
                   <span>Son Görülme:</span>
                 </span>
-                <span className="text-gray-800">{getRelativeTime(device.lastSeen)}</span>
+                <span className="text-gray-800">
+                  {getRelativeTime(device.lastSeen)}
+                </span>
               </div>
               {device.batteryLevel && (
                 <div className="flex items-center justify-between text-sm">

@@ -18,7 +18,9 @@ interface FileManagerProps {
   localStorageEnabled: boolean;
 }
 
-export const FileManager: React.FC<FileManagerProps> = ({ localStorageEnabled }) => {
+export const FileManager: React.FC<FileManagerProps> = ({
+  localStorageEnabled,
+}) => {
   const [dateFilter, setDateFilter] = useState('');
   const [deviceFilter, setDeviceFilter] = useState('all');
   const [categoryFilter, setCategoryFilter] = useState('all');
@@ -85,21 +87,27 @@ export const FileManager: React.FC<FileManagerProps> = ({ localStorageEnabled })
   };
 
   const filteredFiles = files.filter((file) => {
-    const matchesDate = !dateFilter || formatDate(file.date, 'yyyy-MM-dd') === dateFilter;
-    const matchesDevice = deviceFilter === 'all' || file.deviceType === deviceFilter;
-    const matchesCategory = categoryFilter === 'all' || file.category === categoryFilter;
-    
+    const matchesDate =
+      !dateFilter || formatDate(file.date, 'yyyy-MM-dd') === dateFilter;
+    const matchesDevice =
+      deviceFilter === 'all' || file.deviceType === deviceFilter;
+    const matchesCategory =
+      categoryFilter === 'all' || file.category === categoryFilter;
+
     return matchesDate && matchesDevice && matchesCategory;
   });
 
-  const groupedFiles = filteredFiles.reduce((groups, file) => {
-    const dateKey = formatDate(file.date, 'yyyy-MM-dd');
-    if (!groups[dateKey]) {
-      groups[dateKey] = [];
-    }
-    groups[dateKey].push(file);
-    return groups;
-  }, {} as { [key: string]: BackupFile[] });
+  const groupedFiles = filteredFiles.reduce(
+    (groups, file) => {
+      const dateKey = formatDate(file.date, 'yyyy-MM-dd');
+      if (!groups[dateKey]) {
+        groups[dateKey] = [];
+      }
+      groups[dateKey].push(file);
+      return groups;
+    },
+    {} as { [key: string]: BackupFile[] }
+  );
 
   if (!localStorageEnabled) {
     return (
@@ -122,14 +130,20 @@ export const FileManager: React.FC<FileManagerProps> = ({ localStorageEnabled })
         <div className="bg-white rounded-lg shadow p-4">
           <div className="flex items-center space-x-2">
             <File className="w-5 h-5 text-blue-600" />
-            <span className="text-sm font-medium text-gray-600">Toplam Dosya</span>
+            <span className="text-sm font-medium text-gray-600">
+              Toplam Dosya
+            </span>
           </div>
-          <p className="text-2xl font-bold text-gray-800 mt-1">{files.length}</p>
+          <p className="text-2xl font-bold text-gray-800 mt-1">
+            {files.length}
+          </p>
         </div>
         <div className="bg-white rounded-lg shadow p-4">
           <div className="flex items-center space-x-2">
             <Download className="w-5 h-5 text-green-600" />
-            <span className="text-sm font-medium text-gray-600">Toplam Boyut</span>
+            <span className="text-sm font-medium text-gray-600">
+              Toplam Boyut
+            </span>
           </div>
           <p className="text-2xl font-bold text-gray-800 mt-1">
             {formatFileSize(totalSize)}
@@ -138,19 +152,23 @@ export const FileManager: React.FC<FileManagerProps> = ({ localStorageEnabled })
         <div className="bg-white rounded-lg shadow p-4">
           <div className="flex items-center space-x-2">
             <Smartphone className="w-5 h-5 text-purple-600" />
-            <span className="text-sm font-medium text-gray-600">iOS Dosyaları</span>
+            <span className="text-sm font-medium text-gray-600">
+              iOS Dosyaları
+            </span>
           </div>
           <p className="text-2xl font-bold text-gray-800 mt-1">
-            {files.filter(f => f.deviceType === 'iOS').length}
+            {files.filter((f) => f.deviceType === 'iOS').length}
           </p>
         </div>
         <div className="bg-white rounded-lg shadow p-4">
           <div className="flex items-center space-x-2">
             <Smartphone className="w-5 h-5 text-green-600" />
-            <span className="text-sm font-medium text-gray-600">Android Dosyaları</span>
+            <span className="text-sm font-medium text-gray-600">
+              Android Dosyaları
+            </span>
           </div>
           <p className="text-2xl font-bold text-gray-800 mt-1">
-            {files.filter(f => f.deviceType === 'Android').length}
+            {files.filter((f) => f.deviceType === 'Android').length}
           </p>
         </div>
       </div>
@@ -256,7 +274,9 @@ export const FileManager: React.FC<FileManagerProps> = ({ localStorageEnabled })
                                 {file.name}
                               </h4>
                               <div className="flex items-center space-x-4 text-sm text-gray-600">
-                                <span>{getCategoryDisplayName(file.category)}</span>
+                                <span>
+                                  {getCategoryDisplayName(file.category)}
+                                </span>
                                 <span>{file.deviceType}</span>
                                 <span>{formatFileSize(file.size)}</span>
                               </div>
