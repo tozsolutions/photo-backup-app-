@@ -1,5 +1,5 @@
-import '@testing-library/jest-dom'
-import { vi } from 'vitest'
+import '@testing-library/jest-dom';
+import { vi } from 'vitest';
 
 // Mock service worker registration
 Object.defineProperty(window, 'navigator', {
@@ -10,7 +10,7 @@ Object.defineProperty(window, 'navigator', {
       register: vi.fn(() => Promise.resolve()),
     },
   },
-})
+});
 
 // Mock localStorage
 const localStorageMock = {
@@ -18,7 +18,7 @@ const localStorageMock = {
   setItem: vi.fn(),
   removeItem: vi.fn(),
   clear: vi.fn(),
-}
+};
 Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
-})
+});

@@ -43,11 +43,17 @@ export const useDeviceScanner = () => {
       // Simulate device discovery with some randomness
       const discoveredDevices = mockDevices
         .filter(() => Math.random() > 0.3) // Randomly filter devices
-        .map(device => ({
+        .map((device) => ({
           ...device,
           lastSeen: new Date(Date.now() - Math.random() * 300000), // Random last seen time
           isConnected: Math.random() > 0.2, // 80% chance of being connected
-          batteryLevel: Math.max(20, Math.min(100, (device.batteryLevel || 50) + (Math.random() - 0.5) * 10)),
+          batteryLevel: Math.max(
+            20,
+            Math.min(
+              100,
+              (device.batteryLevel || 50) + (Math.random() - 0.5) * 10
+            )
+          ),
         }));
 
       setDevices(discoveredDevices);

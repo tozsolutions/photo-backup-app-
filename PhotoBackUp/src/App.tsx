@@ -62,7 +62,12 @@ function App() {
         setBackupSessions((prev) =>
           prev.map((session) =>
             session.deviceId === deviceId
-              ? { ...session, progress, totalFiles: total, completedFiles: completed }
+              ? {
+                  ...session,
+                  progress,
+                  totalFiles: total,
+                  completedFiles: completed,
+                }
               : session
           )
         );
@@ -80,7 +85,9 @@ function App() {
       // Mark as failed
       setBackupSessions((prev) =>
         prev.map((session) =>
-          session.deviceId === deviceId ? { ...session, isActive: false } : session
+          session.deviceId === deviceId
+            ? { ...session, isActive: false }
+            : session
         )
       );
     }
@@ -93,7 +100,9 @@ function App() {
     const totalFiles = Math.floor(Math.random() * 50) + 10; // 10-60 files
 
     for (let i = 0; i <= totalFiles; i++) {
-      await new Promise((resolve) => setTimeout(resolve, 100 + Math.random() * 200));
+      await new Promise((resolve) =>
+        setTimeout(resolve, 100 + Math.random() * 200)
+      );
       const progress = Math.floor((i / totalFiles) * 100);
       onProgress(progress, totalFiles, i);
     }
@@ -102,7 +111,7 @@ function App() {
   const handleEnableLocalStorage = () => {
     setLocalStorageEnabled(true);
     localStorage.setItem('localStorageEnabled', 'true');
-    
+
     // Set up backup directories
     localStorage.setItem(
       'backupDirectories',
@@ -135,7 +144,9 @@ function App() {
               <div className="flex items-center space-x-2">
                 <Wifi
                   className={`w-5 h-5 ${
-                    isScanning ? 'text-green-500 animate-pulse' : 'text-gray-400'
+                    isScanning
+                      ? 'text-green-500 animate-pulse'
+                      : 'text-gray-400'
                   }`}
                 />
                 <span className="text-sm text-gray-600">
